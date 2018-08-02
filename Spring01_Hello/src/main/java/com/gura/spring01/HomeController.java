@@ -15,7 +15,7 @@ public class HomeController {// /home.do 요청에 대해 응답할 것임
 	@RequestMapping("/home.do")//.do 는 생략 가능
 	public String home(HttpServletRequest request) {
 		
-		List<String> news=new ArrayList<String>();
+		List<String> news=new ArrayList<>();
 		news.add("안녕하세요");
 		news.add("오늘 Spring Framework 시작 입니다.");
 		news.add("어뗘구..");
