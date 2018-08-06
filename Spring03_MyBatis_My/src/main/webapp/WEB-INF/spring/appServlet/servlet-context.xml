@@ -42,9 +42,13 @@
 	<context:component-scan base-package="com.gura.spring03" />
 	<!-- component-scan 가 일어나면 "com.gura.spring03"가 bean 이 된다. -->
 	
+	<!-- member 하위 패키지를 모두 scan 해서 bean 으로 만들어야 되는 객체를
+		 bean 으로 만들어서 관리하기 -->
+	<!-- @Controller, @Service, @Repository, @Component ... 등 이런 어노테이션이 있는 곳을 scan 해서 
+		 Bean 으로 관리를 한다.
+	-->
 	<context:component-scan 
-		base-package="com.gura.spring03.member.controller" />
-	<context:component-scan 
-		base-package="com.gura.spring03.member.dao" />
+		base-package="com.gura.spring03.member.*" />
+
 	
 </beans:beans>
