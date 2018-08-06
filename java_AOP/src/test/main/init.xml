@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<bean class="test.service.MemberServiceImpl" /> <!-- 빈으로 관리할 클래스는? -->
+	<bean class="test.service.CafeServiceImple" />
+
+	<!-- Aspect 를 bean 으로 만들고 id 부여/공통적으로 적용할 클래스 -->
+	<bean id="one" class="test.aspect.PrintLogAspect" />
+
+	<!-- aop 설정 /원하는 위치에 적용되게 한다 ** -->
+	<aop:config><!-- aspect expression! 표현 -->
+		<aop:pointcut expression="execution(public void *())"
+			id="myPoint" />
+
+		<aop:pointcut expression="execution(public void *())"
+			id="yourPoint" />
+		<!-- (public void *()는 어디에다가 적용할 지 선택하는 곳 -->
+		<!-- pointcut 은 aop 를 적용할 위치를 설정하는 곳 -->
+
+		<!-- one 이라는 아이디를 가지고 있는 객체의 printLog 라는 이름의 메소드를 myPoint 의 주변(around)에 
+			적용을 해라 -->
+		<aop:aspect ref="one">
+			<aop:around method="printLog" pointcut-ref="myPoint" /><!-- 
+				after, before -->
+		</aop:aspect>
+	</aop:config>
+</beans>
+<!-- · config - 구성
+	 · execution - 실행 
+	 · expression - 표현
+-->
