@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
  *  횡단 관심사(Cross Concern)를 Aspect 로 작성하기
  */
 /*
- *  1. execution(public * *(..)) => 접근 지정자가 public 인 메소드가
+ *  1. execution(public * *(..)) => 접근 지정자가 public 인 메소드가 / execution - 실행
  *     point cut
  *  2. excution(* test.service.*.*(..)) 
  *     => test.service 패키지의 모든 메소드가 point cut
  *  3. excution(public void insert*(..)) 
- *     => 접근 지정자는 public 리턴 type 은 void 이고 메소드명이
+ *     => 접근 지정자는 public, 리턴 type 은 void 이고 메소드명이
  *     	  insert 로 시작하는 모든 메소드가 point cut
  *  4. excution(* delete*(*))
  *     => 메소드 명이 delete 로 시작하고 인자로 1개 전달받는 메소드가
