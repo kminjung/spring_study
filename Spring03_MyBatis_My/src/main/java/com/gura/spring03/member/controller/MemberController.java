@@ -29,7 +29,7 @@ public class MemberController {
 	
 	//회원 수정 폼 요청 처리
 	@RequestMapping("/member/updateform")//어떤 경로 요청이 왔을 때
-	public ModelAndView updateForm(@RequestParam() int num) { //만약 리퀘스트를 통해 전달된 파라미터가 있으면 추출도 한다.
+	public ModelAndView updateForm(@RequestParam() int num) { //만약 request를 통해 전달된 파라미터가 있으면 추출도 한다.
 		ModelAndView mView=new ModelAndView();
 		mService.getData(mView, num); // 무슨 서비스를 통해
 		mView.setViewName("member/updateform");//어디로 어떻게 이동 할 것인지

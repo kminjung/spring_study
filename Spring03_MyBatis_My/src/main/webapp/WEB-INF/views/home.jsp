@@ -11,6 +11,7 @@
 <h3>인덱스 페이지입니다.</h3>
 <ul>
 	<li><a href="member/list.do">회원목록 보기</a></li>
+	<li><a href="users/signup_form.do">회원가입</a></li>
 </ul>
 </body>
 </html>
