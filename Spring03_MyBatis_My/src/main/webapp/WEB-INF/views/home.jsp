@@ -9,9 +9,15 @@
 </head>
 <body>
 <h3>인덱스 페이지입니다.</h3>
+<!-- session 영역에 id 가 비어있지 않으면(로그인 된 상태라면) -->
+<c:if test="${not empty id }">
+	<p><strong><a href="users/info.do">${id }</a></strong>님 로그인중..!</p>
+	<a href="users/logout.do">로그아웃</a>
+</c:if>
 <ul>
 	<li><a href="member/list.do">회원목록 보기</a></li>
 	<li><a href="users/signup_form.do">회원가입</a></li>
+	<li><a href="users/loginform.do">로그인하기</a></li>
 </ul>
 </body>
 </html>

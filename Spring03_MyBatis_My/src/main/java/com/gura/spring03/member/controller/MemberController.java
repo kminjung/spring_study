@@ -23,7 +23,7 @@ public class MemberController {
 	
 	@RequestMapping("/member/update")
 	public String update(@ModelAttribute MemberDto dto) {
-		mService.update(dto);
+		mService.update(dto); //update 를 할게 dto 다
 		return "redirect:/member/list.do";
 	}
 	

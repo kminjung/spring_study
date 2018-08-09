@@ -38,15 +38,15 @@
 		var inputId=$(this).val();
 		//ajax 요청을 이용해서 서버에 보낸다.
 		$.ajax({
-			url:"checkid.do",
+			url:"${pageContext.request.contextPath}/users/checkid.do",//요청url 이 페이지를 받는 
 			method:"post",
 			data:{"inputId":inputId},
-			success:function(responseData){
+			success:function(responseData){//컨트롤러에서 응답되는 문자열이 JQuery문자열로 (responseData)로 들어온다.
 				//뭐가 응답되는지 콘솔에 출력해 보기 
 				console.log(responseData);
 				// responseData 는 object 이다.
 				// {canUse:true} 또는 {canUse:false}
-				if(responseData.canUse){
+				if(responseData.canUse){//Objcet 이기 때문에 . 할 수 있다.
 					formValid=true;
 					$("#checkResult")
 					.text("사용가능")

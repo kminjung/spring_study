@@ -42,5 +42,11 @@ public class UsersDaoImpl implements UsersDao{
 			return false;
 		}
 	}
+	//비밀번호 수정하는 메소드
+	@Override
+	public void updatePwd(UsersDto dto) {
+		session.update("users.updatePwd",dto);
+		
+	}
 
 }

@@ -1,6 +1,9 @@
 package com.gura.spring03.users.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,6 +38,86 @@ public class UsersServiceImpl implements UsersService{
 	      mView.addObject("msg",dto.getId()+"회원님이 가입되었습니다."); // 필요한 모델이 있으면 여기에다
  
 	   }
+	 //로그인 관련 처리를 하는 서비스 메소드 0809
+	@Override
+	public void login(ModelAndView mView, UsersDto dto,
+			HttpSession session) { // 사용자가 입력한 비밀번호 
+		// 로그인 성공여부를 담을 지역 변수
+		boolean isLoginSuccess=false;
+		//인자로 전달된 Dto 에 있는 회원의 아이디를 이용해서
+		//Select 한다.
+		UsersDto resultDto=dao.getData(dto.getId()); // DB 에 저장된 비밀번호
+		// 해당 아이디가 DB 에 존재한다면
+		if(resultDto !=null ) {
+			//사용자가 입력한 비밀번호와 DB 저장된 암호화된 비밀번호를 비교해서 일치하는지 판단해야 한다.
+			isLoginSuccess=
+					BCrypt.checkpw(dto.getPwd(), resultDto.getPwd());//(암호X문자열, 암호화 된 문자열 ) 를 비교해서 맞으면 true)
+			if(isLoginSuccess) {
+			}
+			if(isLoginSuccess) {
+				//로그인 처리를 해준다.
+				session.setAttribute("id", dto.getId());
+			}
+			//request 에 담을 내용을 ModelAndView 객체에 담는다.
+			mView.addObject("isLoginSuccess",isLoginSuccess);
+		}
+	}
+
+	@Override
+	public void info(ModelAndView mView, HttpSession session) {
+		//세션에 저장된 아이디를 읽어와서
+		String id=(String)session.getAttribute("id");
+		//dao 에서 해당 회원정보를 얻어와서
+		UsersDto dto=dao.getData(id);
+		//ModelAndView 객체에 담는다 (request 에 담는작업 대신)
+		mView.addObject("dto",dto);
+		
+		
+	}
+
+	@Override
+	public void updateForm(ModelAndView mView, HttpSession session) {
+		String id=(String)session.getAttribute("id");
+		UsersDto dto=dao.getData(id);
+		mView.addObject("dto",dto);//request 에 담은 것
+		
+	}
+
+	@Override
+	public void update(UsersDto dto) {
+	
+		dao.update(dto);
+		
+	}
+	//인자로 전달된 비밀번호가 맞는 비밀번호인지 여부를 리턴하는 서비스 메소드
+	@Override
+	public boolean isValidPwd(String inputPwd, HttpSession session) {//inputPwd에 저장된 거 하고 
+		//세션영역에 저장된 아이디를 읽어와서
+		String id=(String)session.getAttribute("id");
+		//DB 에서 해당 정보를 얻어와서
+		UsersDto dto=dao.getData(id);
+		//일치하는지 여부를
+		boolean isValid=BCrypt.checkpw(inputPwd, dto.getPwd());//dto.getPwd DB 에 저장된거하고 비교하는 것
+		//리턴하기
+		
+		return isValid;
+		
+	}
+
+	@Override
+	public void updatePwd(String pwd, HttpSession session) {
+		//세션에 저장된 아이디
+		String id=(String)session.getAttribute("id");
+		//비밀번호 암호화
+		String encodedPwd=new BCryptPasswordEncoder().encode(pwd);
+		//UsersDto 객체에  두 개의 정보 담기
+		UsersDto dto=new UsersDto();
+		dto.setId(id);
+		dto.setPwd(encodedPwd);
+		//UsersDto 객체를 인자로 전달해서 비밀번호 수정하기
+		dao.updatePwd(dto);
+		
+	}
 	
 
 }
