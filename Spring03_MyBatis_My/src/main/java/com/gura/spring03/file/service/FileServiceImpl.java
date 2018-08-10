@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.spring03.exception.ForbiddenException;
 import com.gura.spring03.file.dao.FileDao;
 import com.gura.spring03.file.dto.FileDto;
 
@@ -103,6 +104,42 @@ public class FileServiceImpl implements FileService{
 		
 		//FileDao 객체를 이용해서 DB 에 저장하기
 		dao.insert(dto);		
+		
+	}
+
+	@Override
+	public void getData(ModelAndView mView, int num) {
+		//다운로드 시켜줄 파일의 정보를 얻어와서
+		FileDto dto=dao.getData(num);
+		//ModelAndView 객체에 담아준다.
+		mView.addObject("dto",dto);
+		
+	}
+
+	@Override
+	public void delete(HttpServletRequest request, int num) {
+		/*
+		 *  이 요청을 한 클라이언트가 자신의 글을 지우는게 맞는지 확인하기
+		 */
+		String id=(String)request.getSession().getAttribute("id");//세션에 있는 id, dto 에 있는 id 가 같아야 한다.
+		
+		//삭제할 파일의 정보
+		FileDto dto=dao.getData(num);
+		if(!id.equals(dto.getWriter())) {// 자바에서는 비교연산자 (!=...) 를 쓰면 안된다.
+			//금지된 요청이라는 응답을 한다.
+			throw new ForbiddenException();
+		}
+		
+		//1.파일 시스템이서 파일 삭제
+		String path=
+				request.getServletContext().getRealPath("/upload")+
+				File.separator+dto.getSaveFileName();
+		try {
+			new File(path).delete();
+			
+		}catch(Exception e){}
+		//2. DB 에서 파일정보 삭제
+		dao.delete(num);
 		
 	}
 

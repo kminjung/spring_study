@@ -129,5 +129,10 @@ public class FileDto {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
+
+	public FileDto getData(int num2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

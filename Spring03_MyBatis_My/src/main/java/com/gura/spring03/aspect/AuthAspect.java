@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 public class AuthAspect {
 	/*
-	 *  컨트롤러에 특정 메소드에 aop 를 적용해서 로그인 했는지
+	 *  컨트롤러 특정 메소드에 aop 를 적용해서 로그인 했는지
 	 *  여부를 검사를 하는 메소드
 	 */
 	//servlet-context.xml 1.component scan / 2. aspectj autoproxy 설정이 있어야 한다.

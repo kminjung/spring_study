@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.gura.spring03.file.dto.FileDto;
@@ -39,7 +40,10 @@ public class FileDaoImpl implements FileDao{
 	@Override
 	public List<FileDto> getList(FileDto dto) {
 		
-		return session.selectList("file.getList", dto);
+		throw new DataAccessException("파일 목록 안보여줄거임") { // 익명의 innerclass
+		};
+		
+		//return session.selectList("file.getList", dto);
 	}
 
 	@Override
