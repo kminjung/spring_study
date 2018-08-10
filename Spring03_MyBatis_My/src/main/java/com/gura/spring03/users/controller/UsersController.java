@@ -177,6 +177,15 @@ public class UsersController {
 		//개인정보 보기로 리다일렉트
 		return new ModelAndView("redirect:/users/info.do");
 	}
+	//회원탈퇴 요청 처리
+	@RequestMapping("/users/delete") // returun type 이 ModelAndView /auth?? / .1
+	public ModelAndView authDelete(HttpServletRequest request,
+			ModelAndView mView) { // .2
+		service.delete(mView, request.getSession()); //.2 세션을 mView 로 받지 않고 request 로 받을 수 있다.
+		//view 페이지로 이동해서 응답하기 //.3
+		mView.setViewName("users/delete");
+		return mView;
+	}
 }
 /*
 * ModelAndView - Controller 처리 결과 후 응답할 view와 view에 전달할 값을 저장

@@ -55,8 +55,16 @@
 		base-package="com.gura.spring03.users.*" />
 	<context:component-scan 
 		base-package="com.gura.spring03.aspect" />
+	<context:component-scan 
+		base-package="com.gura.spring03.file.*" />
 		
 	<!-- 어노테이션 기반으로 aop 를 적용하기 위한 설정 -->
 	<aop:aspectj-autoproxy/>
+	
+	<!-- Multipart 폼 전송을 처리하기 위한 bean -->
+	<beans:bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10240000"/>		
+	</beans:bean>
 
 </beans:beans>

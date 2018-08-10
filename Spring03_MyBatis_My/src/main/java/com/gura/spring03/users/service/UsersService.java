@@ -15,5 +15,7 @@ public interface UsersService {
 	public void update(UsersDto dto);
 	public boolean isValidPwd(String inputPwd, HttpSession session);
 	public void updatePwd(String pwd, HttpSession session);
+	public void delete(ModelAndView mView, HttpSession session);//0810
+	// 필요한 객체가 뭘까 생각하고 목록을 적어놓는 것, 전달받는 객체
 	
 }
