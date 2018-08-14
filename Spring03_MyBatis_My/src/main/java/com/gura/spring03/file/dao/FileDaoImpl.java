@@ -7,8 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import com.gura.spring03.exception.DeleteFailException;
 import com.gura.spring03.file.dto.FileDto;
-
+/*
+ *  Dao 는 @Respository 어노테이션을 붙여서 만든다.
+ *  
+ *  Dao 에서는 SqlSession 객체를 이용해서
+ *  DB에 SELECT, INSERT, UPDATE 작업을 하기 때문에
+ *  SQLException 이 발생할 가능성이 있는데,
+ *  Spring 프레임 워크는 @Repository 어노테이션이 붙어있는
+ *  Dao 에서 발생하는 SQLException 을 catch 해서
+ *  DataAccessException type 의 예외를 발생시킨다.
+ *  
+ *  따라서 ExceptionController 에 있는 DataAccessException 을
+ *  처리하는 메소드에서 해당 예외를 처리하면된다.
+ */
 @Repository
 public class FileDaoImpl implements FileDao{
 	
@@ -18,7 +31,11 @@ public class FileDaoImpl implements FileDao{
 	
 	@Override
 	public void delete(int num) {
-		session.delete("file.delete", num);
+		//삭제한 row 의 갯수 얻어내기
+		int flag=session.delete("file.delete", num);
+		if(flag<1) { // 만약 삭제 실패하면 
+			throw new DeleteFailException("파일 삭제 실패!");
+		}
 	}
 
 	@Override
@@ -40,10 +57,10 @@ public class FileDaoImpl implements FileDao{
 	@Override
 	public List<FileDto> getList(FileDto dto) {
 		
-		throw new DataAccessException("파일 목록 안보여줄거임") { // 익명의 innerclass
-		};
+		//throw new DataAccessException("파일 목록 안보여줄거임") { // 익명의 innerclass
+		//};
 		
-		//return session.selectList("file.getList", dto);
+		return session.selectList("file.getList", dto);
 	}
 
 	@Override

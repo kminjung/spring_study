@@ -11,7 +11,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *  
  *  403 - 금지된 요청
  */
-@ResponseStatus(HttpStatus.FORBIDDEN)
+@ResponseStatus(HttpStatus.FORBIDDEN) // 403
 public class ForbiddenException extends RuntimeException{
 	
 }
+/*
+ *  @ResponseStatus
+ *  
+ *  - 어노테이션 없이 예외를 처리한다 (보통 당신이 작성하지않은 선정의된 예외들)
+ *  - 사용자를 특정한 에러페이지로 리다이렉트한다
+ *  - 완전히 컨스텀 에러 응답을 만든다
+ */
+
