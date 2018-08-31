@@ -1,3 +1,15 @@
+-- 댓글 테이블
+CREATE TABLE board_cafe_comment(
+num NUMBER PRIMARY KEY,
+writer VARCHAR2(100),
+content VARCHAR2(500),
+target_id VARCHAR2(100),
+ref_group NUMBER,
+comment_group NUMBER,
+regdate DATE);
+
+create sequence board_cafe_comment_seq;
+
 -- 상품 테이블 / update
 CREATE TABLE shop(
 	num NUMBER PRIMARY KEY, --상품번호
@@ -39,3 +51,5 @@ VALUES('superman', 10000, 0);
 
 INSERT INTO client_account (id, money, point)
 VALUES('batman', 10000, 0);
+
+select * from BOARD_CAFE;

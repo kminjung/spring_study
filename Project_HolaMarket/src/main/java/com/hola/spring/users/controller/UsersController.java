@@ -17,6 +17,15 @@ public class UsersController {
 		
 		return "users/info";
 	}
-	
-	
+	@RequestMapping("users/updateform")
+	public String update() {
+		
+		return "users/updateform";
+	}
+	@RequestMapping("users/test")
+	public String test() {
+		
+		return "users/test";
+	}
+
 }

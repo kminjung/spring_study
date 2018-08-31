@@ -10,9 +10,7 @@
 <style>
 	.row > div{
 		border: 1px solid #ccc;
-	}
-	.row > div{
-		border: 1px solid #ccc;
+		text-align:center;
 	}
 	.row > div > div{
 		border-bottom: solid 1px #ccc; 
@@ -21,7 +19,11 @@
 	div{
 		padding:none;
 	}
-	
+	.menu ul li{	
+		text-align:center;
+		
+		list-style:none;
+	}
 	#info{
 		padding: 0 !important;
 		display: inline-block;
@@ -41,6 +43,12 @@
 	    width: 40%;
 	    border-radius: 50%;
 	}
+	button{
+		backgorund-color: #6ACCBF;
+	};
+	#mainContents{
+		height:100%;
+	}
 </style>
 </head>
 <body>
@@ -58,7 +66,7 @@
 			<div>
 				<p>"$[dto.id]"</p>
 			</div>
-			<div>
+			<div class="menu">
 				<ul>
 					<li>						
 				        <a class="active" href="">
@@ -77,7 +85,7 @@
 			<div class="profile_middle profile_line">
 			    <div class="time_ago">
 			      <img alt="가입일" height="23" width="23" src="${pageContext.request.contextPath }/resources/images/date_icon.png">
-			      <!----><span>2018년 08월 16일 (date)</span>
+			      <!----><span>$[date]</span>
 			    </div>
 			    <div class="address">
 			      <img alt="주요 판매장소" height="23" width="23" src="${pageContext.request.contextPath }/resources/images/details_icon.png">
@@ -95,14 +103,16 @@
 			    <!---->
 			</div>
 			<div>
-				<p>자기소개</p>
+				<p>"$[자기소개]"</p>
 			</div>			
 			<div>
-				<button type="button" class="btn btn-default">회원정보 수정</button>
+				<button type="button" class="btn btn-success">회원정보 수정</button>
 			</div>
 		</div>
-		<div class="col-xs-9">
+		<div class="col-xs-9" id="mainContents">
 			<h3>main 컨텐츠</h3>
+			<img src="${pageContext.request.contextPath }/resources/images/img_default_item.png" alt=""
+					height="80" width="80"/>
 			<p>지금바로 안쓰는 아이템을 팔아보세요!</p>
 		</div>
 	</div>

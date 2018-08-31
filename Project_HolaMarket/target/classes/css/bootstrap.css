@@ -3178,8 +3178,8 @@ fieldset[disabled] .btn-primary.focus {
 .btn-success:focus,
 .btn-success.focus {
   color: #fff;
-  background-color: #449d44;
-  border-color: #255625;
+  background-color: #6ACCBF;
+  border-color: #68BCAE;
 }
 .btn-success:hover {
   color: #fff;

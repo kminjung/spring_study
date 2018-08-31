@@ -54,7 +54,7 @@
 	</select>
 	
 	<select id="getData" parameterType="cafeDto" 
-		resultType="cafeDto"> 
+		resultType="cafeDto">
 		SELECT result1.*
 		FROM ( SELECT <include refid="cafeColumn"/>,
 				LAG(num, 1, 0) OVER(ORDER BY num DESC) prevNum,
@@ -90,5 +90,5 @@
 		UPDATE board_cafe
 		SET viewCount=viewCount+1
 		WHERE num=#{num}
-	</update>
+	</update>	
 </mapper>
