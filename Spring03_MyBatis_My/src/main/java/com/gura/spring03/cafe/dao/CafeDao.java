@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.gura.spring03.cafe.dto.CafeDto;
 
-public interface CafeDao { // 구현 할 클래스가 강제로 메소드를 정의한 것
+public interface CafeDao { //구현 할 클래스가 강제로 메소드를 정의한 것
 	//새글 저장하는 메소드 
 	public void insert(CafeDto dto);
 	//인자로 전달되는 정보에 맞는 글의 갯수를 리턴하는 메소드 
-	public int getCount(CafeDto dto); //Dto 키워드 검색이 있는 경우 그 키워드에 맞게 리턴
+	public int getCount(CafeDto dto);
 	//인자로 전달되는 정보에 맞는 글 목록을 리턴하는 메소드 
 	public List<CafeDto> getList(CafeDto dto);
 	//인자로 전달되는 정보에 맞는 글 하나의 정보를 리턴하는 메소드
@@ -19,7 +19,7 @@ public interface CafeDao { // 구현 할 클래스가 강제로 메소드를 정
 	public void update(CafeDto dto);
 	//인자로 전달되는 글번호에 해당되는 글의 조회수를 증가 시키는 메소드
 	public void addViewCount(int num);
-	//글을 수정하는 메소드
+	
 }
 /*
  *  public CafeDto getData(CafeDto dto);

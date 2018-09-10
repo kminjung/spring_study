@@ -168,8 +168,6 @@ public class CafeServiceImpl implements CafeService{
 				cafeCommentDao.getList(num);
 		request.setAttribute("commentList", commentList);		
 	}
-	
-	//댓글
 
 	@Override
 	public void commentInsert(CafeCommentDto dto) {
@@ -189,68 +187,41 @@ public class CafeServiceImpl implements CafeService{
 
 	@Override
 	public void delete(HttpServletRequest request) {
+		
 		//1. 파라미터로 전달되는 글번호
 		int num=Integer.parseInt(request.getParameter("num"));
 		
 		/*
-		 *  로그인 된 아이디와 삭제할 글의 작성자와 다르면
-		 *  forbiddenException 발생 시키기
+		 *  로그인된 아이디와 삭제할 글의 작성자와 다르면
+		 *  ForbiddenException 발생 시키기
 		 */
 		String id=(String)request.getSession().getAttribute("id");
-		//글번호를 이용해서
+		//글번호를 이용해서 
 		CafeDto dto=new CafeDto();
 		dto.setNum(num);
 		//해당글의 작성자를 읽어와서 
 		String writer=cafeDao.getData(dto).getWriter();
 		if(!id.equals(writer)) {
 			throw new ForbiddenException();
-		} // not 연산자 - !
-		//2. 삭제하기
-		cafeDao.delete(num);
+		}
 		
+		//2. 삭제하기 
+		cafeDao.delete(num);
 	}
 
-	public void update(HttpServletRequest request, CafeDto dto) {
+	@Override
+	public void update(HttpServletRequest request) {
 		//수정할 글정보 얻어오기 
 		int num=Integer.parseInt(request.getParameter("num"));
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");
 		//CafeDto 에 담기
+		CafeDto dto=new CafeDto();
 		dto.setNum(num);
 		dto.setTitle(title);
 		dto.setContent(content);
 		//CafeDao 를 이용해서 수정 반영
-		
-		//request 에 결과 담고 
-		cafeDao.update(dto);
-		
-	}
-
-	public void updateform(HttpServletRequest request, CafeDto dto) {
-		//1. 파라미터로 전달되는 수정할 글번호 읽어오기
-		int num=Integer.parseInt(request.getParameter("num"));
-		
-		//글번호를 CafeDto 객체에 담아서 
-		dto.setNum(num);
-		
-		//2. 수정할 글정보 얻어오기
-		CafeDto resultDto=cafeDao.getData(dto);
-		//3. request 에 담고
-		request.setAttribute("dto", resultDto);
-
-		
-	}
-
-	@Override
-	public void update(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateform(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
+		cafeDao.update(dto);		
 	}
 	
 }

@@ -1,18 +1,17 @@
 package com.gura.spring03.cafe.dto;
 
 public class CafeDto {
-	private int num; // 번호
-	private String writer; // 작성자
-	private String title; // 제목
-	private String content; // 내용
-	private int viewCount; // 조회수
-	private String regdate; // 작성날짜
-	private int startRowNum; 
+	private int num;
+	private String writer;
+	private String title;
+	private String content;
+	private int viewCount;
+	private String regdate;
+	private int startRowNum;
 	private int endRowNum;
 	private int prevNum; //이전글의 글번호
 	private int nextNum; //다음글의 글번호
 	
-	//디폴트 생성자 
 	public CafeDto() {}
 
 	public CafeDto(int num, String writer, String title, String content, int viewCount, String regdate, int startRowNum,
@@ -109,5 +108,6 @@ public class CafeDto {
 	public void setNextNum(int nextNum) {
 		this.nextNum = nextNum;
 	}
+	
 	
 }

@@ -53,3 +53,6 @@ INSERT INTO client_account (id, money, point)
 VALUES('batman', 10000, 0);
 
 select * from BOARD_CAFE;
+
+-- Users 테이블에 profile 이미지를 저장할 칼럼 추가
+ALTER TABLE users ADD(profileImage VARCHAR2(100));

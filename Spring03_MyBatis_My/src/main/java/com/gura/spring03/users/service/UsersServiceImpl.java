@@ -1,6 +1,19 @@
 package com.gura.spring03.users.service;
 
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.gura.spring03.users.dao.UsersDao;
+import com.gura.spring03.users.dto.UsersDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -79,15 +92,13 @@ public class UsersServiceImpl implements UsersService{
 	public void updateForm(ModelAndView mView, HttpSession session) {
 		String id=(String)session.getAttribute("id");
 		UsersDto dto=dao.getData(id);
-		mView.addObject("dto",dto);//request 에 담은 것
-		
+		mView.addObject("dto", dto); //request 에 담은 것
 	}
-
 	@Override
 	public void update(UsersDto dto) {
-	
-		dao.update(dto);
 		
+		//DB 에 수정 반영한다. 
+		dao.update(dto);
 	}
 	//인자로 전달된 비밀번호가 맞는 비밀번호인지 여부를 리턴하는 서비스 메소드
 	@Override
@@ -132,6 +143,41 @@ public class UsersServiceImpl implements UsersService{
 		
 		
 	}
-	
+	@Override
+	public String profileUpdate(HttpServletRequest request, MultipartFile mFile) {
+		//로그인된 아이디
+		String id=(String)request.getSession().getAttribute("id");
+		
+		// upload 폴더의 실제 경로 
+		String realPath=
+				request.getServletContext().getRealPath("/upload");
+		String orgFileName=mFile.getOriginalFilename();
+		// 저장할 파일의 상세 경로
+		String filePath=realPath+File.separator;
+		
+		// 파일 시스템에 저장할 파일명을 만든다.
+		String saveFileName=System.currentTimeMillis()+orgFileName;
+		// 업로드 폴더가 존재 하지 않으면 만든다. 
+		File uploadFolder=new File(filePath);
+		if(!uploadFolder.exists()) {
+			uploadFolder.mkdir();
+		}
+		try {
+			//업로드 폴더에 파일을 저장한다.
+			mFile.transferTo(new File(filePath+saveFileName));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		//수정할 정보를 Dto 에 담기
+		UsersDto dto=new UsersDto();
+		dto.setId(id);
+		dto.setProfileImage(saveFileName);
+		
+		//Dao 를 이용해서 수정하기 
+		dao.updateProfile(dto);
+		
+		return saveFileName;
+	}	
 
 }

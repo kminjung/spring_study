@@ -13,9 +13,26 @@ import com.gura.spring03.cafe.service.CafeService;
 
 @Controller
 public class CafeController {
-	//의존객체
-	@Autowired
+	@Autowired // 의존객체
 	private CafeService cafeService;
+	
+	//글 수정 요청 처리
+	@RequestMapping("/cafe/update")
+	public ModelAndView authUpdate(HttpServletRequest request) {
+		cafeService.update(request);
+		return new ModelAndView("cafe/update");
+	}
+	
+	
+	//글 수정 폼 요청처리
+	@RequestMapping("/cafe/updateform")
+	public ModelAndView authUpdateForm(HttpServletRequest request){
+		// request 에 글 하나의 정보가 담기게 한다. 
+		cafeService.detail(request);
+		
+		return new ModelAndView("cafe/updateform");
+	}
+	
 	
 	//글 삭제 요청 처리
 	@RequestMapping("/cafe/delete")
@@ -30,9 +47,9 @@ public class CafeController {
 	@RequestMapping("/cafe/comment_insert")
 	public ModelAndView authCommentInsert
 		(HttpServletRequest request , @ModelAttribute CafeCommentDto dto) {
-		//2
-		cafeService.commentInsert(dto);;
 		
+		cafeService.commentInsert(dto);;
+		//2
 		return new ModelAndView
 			("redirect:/cafe/detail.do?num="+dto.getRef_group());
 	}
@@ -48,7 +65,6 @@ public class CafeController {
 		//view 페이지로 forward 이동해서 응답하기 
 		return new ModelAndView("cafe/detail");
 	}
-
 	
 	
 	//새글 저장 요청 처리
@@ -79,33 +95,4 @@ public class CafeController {
 		//view 페이지로 forward 이동
 		return new ModelAndView("cafe/list");
 	}
-	//수정
-	   @RequestMapping("/cafe/update")
-	   public ModelAndView authUpdate(HttpServletRequest request) {
-	      cafeService.update(request);
-	      return new ModelAndView("cafe/update");
-	   }
-	   
-	   //수정 폼
-	   @RequestMapping("/cafe/updateform")
-	   public ModelAndView authUpdateForm(HttpServletRequest request) {
-	      cafeService.updateform(request);
-	      return new ModelAndView("cafe/updateform");
-	   } 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
